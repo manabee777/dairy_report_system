@@ -59,17 +59,12 @@ public class LoginFilter implements Filter {
 	            if(servlet_path.matches("/employees.*") && e.getAdmin_flag() == 0) {
 	                ((HttpServletResponse)response).sendRedirect(context_path + "/");
 	                return;
-	            }
-
-	            // 従業員管理の昨日は管理者のみが閲覧できるようにする
-	            if(servlet_path.matches("/employees.*") && e.getAdmin_flag() == 0) {
-	                ((HttpServletResponse)response).sendRedirect(context_path + "/");
-	                return;
-	            } else {                   // ログイン画面について
-	        }       // ログインしているのにログイン画面を表示させようとした場合は
+	             }
+	         } else {                   // ログイン画面について
+	                 // ログインしているのにログイン画面を表示させようとした場合は
 	                //システムのトップページにリダイレクト
-	                if(e != null){
-	                    ((HttpServletResponse)response).sendRedirect(context_path + "/");
+	             if(e != null){
+	                 ((HttpServletResponse)response).sendRedirect(context_path + "/");
 	                    return;
 	                }
 	            }
