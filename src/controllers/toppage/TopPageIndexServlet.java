@@ -14,12 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import models.Employee;
 import models.Report;
 import utils.DBUtil;
+
 /**
  * Servlet implementation class TopPageIndexServlet
  */
 @WebServlet("/index.html")
 public class TopPageIndexServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -29,9 +30,9 @@ public class TopPageIndexServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
@@ -40,17 +41,19 @@ public class TopPageIndexServlet extends HttpServlet {
         int page;
         try{
             page = Integer.parseInt(request.getParameter("page"));
-        } catch (Exception e) {
+        } catch(Exception e) {
             page = 1;
         }
-        List<Report> reports = em.createNamedQuery("getMyAllReports",Report.class)
-                                 .setParameter("employee", login_employee)
-                                 .setFirstResult(15 * (page -1))
-                                 .setMaxResults(15)
-                                 .getResultList();
-        long reports_count = (long)em.createNamedQuery("getMyReportsCount", long.class)
-                                      .setParameter("employee", login_employee)
-                                      .getSingleResult();
+        List<Report> reports = em.createNamedQuery("getMyAllReports", Report.class)
+                                  .setParameter("employee", login_employee)
+                                  .setFirstResult(15 * (page - 1))
+                                  .setMaxResults(15)
+                                  .getResultList();
+
+        long reports_count = (long)em.createNamedQuery("getMyReportsCount", Long.class)
+                                     .setParameter("employee", login_employee)
+                                     .getSingleResult();
+
         em.close();
 
         request.setAttribute("reports", reports);
